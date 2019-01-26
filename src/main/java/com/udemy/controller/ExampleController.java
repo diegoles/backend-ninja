@@ -1,8 +1,5 @@
 package com.udemy.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -14,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.udemy.component.ExampleComponent;
 import com.udemy.model.Persona;
+import com.udemy.service.ExampleService;
 
 @Controller
 @RequestMapping("example/")
@@ -21,10 +19,14 @@ public class ExampleController {
 
 	public final static String EXAMPLE_VIEW = "Example";
 	public final static String EXAMPLE_DATA_VIEW = "ExampleData";// Nombre de html sin la extension
-	
+
 	@Autowired
 	@Qualifier("exampleComponent")
 	private ExampleComponent exampleComponent;
+
+	@Autowired
+	@Qualifier("exampleService")
+	private ExampleService exampleService;
 
 	// Primera forma (solo para devolver la vista o insert muy pocos datos)
 
@@ -51,7 +53,7 @@ public class ExampleController {
 	public String exampleStringData(Model model) {
 		exampleComponent.sayHello();
 		model.addAttribute("person", new Persona("Edgar", 29));
-		model.addAttribute("people", getPeople());
+		model.addAttribute("people", exampleService.getListPeople());
 		return EXAMPLE_DATA_VIEW;
 	}
 
@@ -61,18 +63,8 @@ public class ExampleController {
 	public ModelAndView exampleMAVData() {
 		ModelAndView mav = new ModelAndView(EXAMPLE_DATA_VIEW);
 		mav.addObject("person", new Persona("Efrain", 30));
-		mav.addObject("people", getPeople());
+		mav.addObject("people", exampleService.getListPeople());
 		return mav; // Nombre de html sin la extension
-	}
-
-	private List<Persona> getPeople() {
-		List<Persona> people = new ArrayList<>();
-		people.add(new Persona("Alex1", 10));
-		people.add(new Persona("Alex2", 20));
-		people.add(new Persona("Alex3", 30));
-		people.add(new Persona("Alex4", 40));
-
-		return people;
 	}
 
 }

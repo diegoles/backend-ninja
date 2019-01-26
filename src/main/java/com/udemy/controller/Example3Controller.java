@@ -21,6 +21,7 @@ public class Example3Controller {
 	@GetMapping("/showForm")
 	public String showForm(Model model) {
 		model.addAttribute("person", new Persona());
+		//int i=6/0;    //para desplegar un mensaje de error
 		return FORM_VIEM;
 	}
 	

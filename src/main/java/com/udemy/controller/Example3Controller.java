@@ -1,9 +1,12 @@
 package com.udemy.controller;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,11 +37,17 @@ public class Example3Controller {
 	}
 
 	@PostMapping("/addPerson")
-	public ModelAndView addPerson(@ModelAttribute("person") Persona person) {
-		LOG.info("METHOD: 'addPerson' --- PARAMS:' " + person + "'");
-		ModelAndView mav = new ModelAndView(RESULT_VIEM);
-		mav.addObject("person", person);
-		LOG.info("TEMPLATE: '" + RESULT_VIEM + "' -- DATA: '" + person + "'");
+	public ModelAndView addPerson(@Valid @ModelAttribute("person") Persona person, BindingResult bindingResult) {
+		ModelAndView mav = new ModelAndView();
+		if (bindingResult.hasErrors()) {
+			mav.setViewName(FORM_VIEM);
+		} else {
+			LOG.info("METHOD: 'addPerson' --- PARAMS:' " + person + "'");
+			mav.setViewName(RESULT_VIEM);
+			mav.addObject("person", person);
+			LOG.info("TEMPLATE: '" + RESULT_VIEM + "' -- DATA: '" + person + "'");
+		}
+		
 		return mav;
 	}
 

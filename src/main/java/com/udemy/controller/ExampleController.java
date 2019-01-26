@@ -3,6 +3,8 @@ package com.udemy.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 //import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.udemy.component.ExampleComponent;
 import com.udemy.model.Persona;
 
 @Controller
@@ -18,6 +21,10 @@ public class ExampleController {
 
 	public final static String EXAMPLE_VIEW = "Example";
 	public final static String EXAMPLE_DATA_VIEW = "ExampleData";// Nombre de html sin la extension
+	
+	@Autowired
+	@Qualifier("exampleComponent")
+	private ExampleComponent exampleComponent;
 
 	// Primera forma (solo para devolver la vista o insert muy pocos datos)
 
@@ -42,6 +49,7 @@ public class ExampleController {
 
 	@GetMapping("exampleStringData")
 	public String exampleStringData(Model model) {
+		exampleComponent.sayHello();
 		model.addAttribute("person", new Persona("Edgar", 29));
 		model.addAttribute("people", getPeople());
 		return EXAMPLE_DATA_VIEW;

@@ -5,6 +5,10 @@ public class Persona {
 	private String name;
 	private int age;
 
+	public Persona() {
+
+	}
+
 	public Persona(String name, int age) {
 		super();
 		this.name = name;

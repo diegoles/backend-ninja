@@ -19,9 +19,11 @@ public class LoginController {
 
 	@GetMapping("/login")
 	public String showLoginForm(Model model,
-			@RequestParam(name = "error", required = false) String error) {
+			@RequestParam(name = "error", required = false) String error,
+			@RequestParam(name = "logout", required = false) String logout) {
 		model.addAttribute("userCredential", new UserCredential());
 		model.addAttribute("error", error);
+		model.addAttribute("logout", logout);
 		return "login";
 	}
 

@@ -14,6 +14,7 @@ import com.udemy.service.ExampleService;
 public class ExampleServiceImpl implements ExampleService {
 
 	private final static Log LOG = LogFactory.getLog(ExampleServiceImpl.class);
+
 	@Override
 	public List<Persona> getListPeople() {
 		List<Persona> people = new ArrayList<>();
@@ -21,7 +22,7 @@ public class ExampleServiceImpl implements ExampleService {
 		people.add(new Persona("Alex2", 20));
 		people.add(new Persona("Alex3", 30));
 		people.add(new Persona("Alex4", 40));
-		
+
 		LOG.info("!!!!!! HELLO FROM SERVICE  !!!!!");
 
 		return people;

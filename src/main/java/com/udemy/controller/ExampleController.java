@@ -10,15 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.udemy.component.ExampleComponent;
+import com.udemy.constant.ViewConstant;
 import com.udemy.model.Persona;
 import com.udemy.service.ExampleService;
 
 @Controller
 @RequestMapping("example/")
 public class ExampleController {
-
-	public final static String EXAMPLE_VIEW = "Example";
-	public final static String EXAMPLE_DATA_VIEW = "ExampleData";// Nombre de html sin la extension
 
 	@Autowired
 	@Qualifier("exampleComponent")
@@ -33,7 +31,7 @@ public class ExampleController {
 	@GetMapping("exampleString")
 	// @RequestMapping(value="exampleString", method=RequestMethod.GET)
 	public String exampleString() {
-		return EXAMPLE_VIEW;
+		return ViewConstant.EXAMPLE;
 	}
 
 	// Segunda forma (para muchos datos)
@@ -42,7 +40,7 @@ public class ExampleController {
 	// @RequestMapping(value="exampleMAV", method=RequestMethod.GET) ********se
 	// reemplaza por @GetMapping
 	public ModelAndView exampleMAV() {
-		return new ModelAndView(EXAMPLE_VIEW); // Nombre de html sin la extension
+		return new ModelAndView(ViewConstant.EXAMPLE); // Nombre de html sin la extension
 	}
 
 	// FORMAS DE INSERTAR DATOS
@@ -54,14 +52,14 @@ public class ExampleController {
 		exampleComponent.sayHello();
 		model.addAttribute("person", new Persona("Edgar", 29));
 		model.addAttribute("people", exampleService.getListPeople());
-		return EXAMPLE_DATA_VIEW;
+		return ViewConstant.EXAMPLE_DATA;
 	}
 
 	// Segunda forma
 
 	@GetMapping("exampleMAVData")
 	public ModelAndView exampleMAVData() {
-		ModelAndView mav = new ModelAndView(EXAMPLE_DATA_VIEW);
+		ModelAndView mav = new ModelAndView(ViewConstant.EXAMPLE_DATA);
 		mav.addObject("person", new Persona("Efrain", 30));
 		mav.addObject("people", exampleService.getListPeople());
 		return mav; // Nombre de html sin la extension

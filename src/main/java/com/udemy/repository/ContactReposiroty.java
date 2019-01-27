@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 import com.udemy.entity.Contact;
 
 @Repository("contactRepository")
-public interface ContactReposiroty extends JpaRepository<Contact, Serializable>{
+public interface ContactReposiroty extends JpaRepository<Contact, Serializable> {
 
 }

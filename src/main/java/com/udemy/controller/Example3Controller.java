@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.udemy.constant.ViewConstant;
 import com.udemy.model.Persona;
 
 @Controller
@@ -21,9 +22,6 @@ import com.udemy.model.Persona;
 public class Example3Controller {
 
 	private final static Log LOG = LogFactory.getLog(Example3Controller.class);
-
-	public final static String FORM_VIEM = "Form";
-	public final static String RESULT_VIEM = "Result";
 
 	@GetMapping("/showForm")
 	public String showForm(Model model) {
@@ -33,21 +31,21 @@ public class Example3Controller {
 		LOG.debug("DEBUG TRACE");
 		model.addAttribute("person", new Persona());
 		// int i=6/0; //para desplegar un mensaje de error
-		return FORM_VIEM;
+		return ViewConstant.FORM;
 	}
 
 	@PostMapping("/addPerson")
 	public ModelAndView addPerson(@Valid @ModelAttribute("person") Persona person, BindingResult bindingResult) {
 		ModelAndView mav = new ModelAndView();
 		if (bindingResult.hasErrors()) {
-			mav.setViewName(FORM_VIEM);
+			mav.setViewName(ViewConstant.FORM);
 		} else {
 			LOG.info("METHOD: 'addPerson' --- PARAMS:' " + person + "'");
-			mav.setViewName(RESULT_VIEM);
+			mav.setViewName(ViewConstant.RESULT);
 			mav.addObject("person", person);
-			LOG.info("TEMPLATE: '" + RESULT_VIEM + "' -- DATA: '" + person + "'");
+			LOG.info("TEMPLATE: '" + ViewConstant.RESULT + "' -- DATA: '" + person + "'");
 		}
-		
+
 		return mav;
 	}
 

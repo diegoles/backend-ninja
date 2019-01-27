@@ -60,4 +60,10 @@ public class ContactModel {
 		this.city = city;
 	}
 
+	@Override
+	public String toString() {
+		return "ContactModel [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", telephone="
+				+ telephone + ", city=" + city + "]";
+	}
+
 }

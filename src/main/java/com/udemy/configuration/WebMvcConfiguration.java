@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.udemy.controller.RequestTimeInterceptor;
+import com.udemy.component.RequestTimeInterceptor;
 
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurerAdapter {

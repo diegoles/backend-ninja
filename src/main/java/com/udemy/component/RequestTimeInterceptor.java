@@ -1,4 +1,4 @@
-package com.udemy.controller;
+package com.udemy.component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

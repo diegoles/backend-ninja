@@ -2,6 +2,7 @@ package com.udemy.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -35,9 +36,25 @@ public class ContactServiceImpl implements ContactService {
 		List<Contact> contacts = contactRepository.findAll();
 		List<ContactModel> contactsModel = new ArrayList<>();
 
-		contacts.stream()
-		.forEach(x -> contactsModel.add(contactConverter.convertContact2ContactModel(x)));
+		contacts.stream().forEach(x -> contactsModel.add(contactConverter.convertContact2ContactModel(x)));
 		return contactsModel;
+	}
+
+	@Override
+	public Contact findContactById(int id) {
+		Optional<Contact> contact = contactRepository.findById(id);
+		if (contact.isPresent()) {
+			return contact.get();
+		}
+		return null;
+	}
+
+	@Override
+	public void removeContact(int id) {
+		Contact contact = findContactById(id);
+		if (null != contact) {
+			contactRepository.delete(contact);
+		}
 	}
 
 }

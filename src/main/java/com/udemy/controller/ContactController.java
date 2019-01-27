@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.udemy.constant.ViewConstant;
@@ -24,7 +25,7 @@ public class ContactController {
 	@Autowired
 	@Qualifier("contactServiceImpl")
 	private ContactService contactService;
-	
+
 	@RequestMapping("/cancel")
 	public String Cancel() {
 		return "redirect:/contacts/showContacts";
@@ -37,24 +38,29 @@ public class ContactController {
 	}
 
 	@RequestMapping("/addContact")
-	public String addContact(@ModelAttribute(name = "contactModel") ContactModel contactModel, 
-			Model model) {
+	public String addContact(@ModelAttribute(name = "contactModel") ContactModel contactModel, Model model) {
 		LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
-		
+
 		if (null != contactService.addContact(contactModel)) {
 			model.addAttribute("result", 1);
 		} else {
 			model.addAttribute("result", 0);
 		}
-		
+
 		return "redirect:/contacts/showContacts";
 	}
-	
+
 	@GetMapping("/showContacts")
 	public ModelAndView showContacts() {
 		ModelAndView mav = new ModelAndView(ViewConstant.CONTACTS);
 		mav.addObject("contacts", contactService.listAllContacts());
-		
+
 		return mav;
+	}
+
+	@GetMapping("/removeContact")
+	public ModelAndView removeContact(@RequestParam(name = "id", required = true) int id) {
+		contactService.removeContact(id);
+		return showContacts();
 	}
 }

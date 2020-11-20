@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 
 @Component("exampleComponent")
 public class ExampleComponent {
-	private final static Log LOG = LogFactory.getLog(ExampleComponent.class);
+    private final static Log LOG = LogFactory.getLog(ExampleComponent.class);
 
-	public void sayHello() {
-		LOG.info("!!!! HELLO FROM EXAMPLE COMPONENT !!!");
-	}
+    public void sayHello() {
+        LOG.info("!!!! HELLO FROM EXAMPLE COMPONENT !!!");
+    }
 }

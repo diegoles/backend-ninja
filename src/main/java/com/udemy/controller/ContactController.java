@@ -38,6 +38,7 @@ public class ContactController {
 			contactModel = contactService.findContactByIdModel(id);
 		}
 		model.addAttribute("contactModel", contactModel);
+		LOG.info("METHOD: redirectContactForm() -- PARAMS: " + contactModel.toString());
 		return ViewConstant.CONTACT_FORM;
 	}
 

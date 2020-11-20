@@ -9,7 +9,7 @@ import com.udemy.constant.ViewConstant;
 public class ErrorsController {
 	// El error 400 por defecto ya se coge por configuracion ya que existe la carpeta error
 	
-//	@ExceptionHandler(Exception.class)
+	//@ExceptionHandler(Exception.class)
 	public String showInternalError() {
 		return ViewConstant.ERROR;
 	}

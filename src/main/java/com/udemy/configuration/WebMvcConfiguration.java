@@ -11,13 +11,13 @@ import com.udemy.component.RequestTimeInterceptor;
 @Configuration
 public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
 
-	@Autowired
-	@Qualifier("requestTimeInterceptor")
-	private RequestTimeInterceptor requestTimeInterceptor;
+    @Autowired
+    @Qualifier("requestTimeInterceptor")
+    private RequestTimeInterceptor requestTimeInterceptor;
 
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(requestTimeInterceptor);
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(requestTimeInterceptor);
+    }
 
 }

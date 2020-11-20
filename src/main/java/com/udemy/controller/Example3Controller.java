@@ -30,7 +30,7 @@ public class Example3Controller {
 		LOG.error("ERROR TRACE");
 		LOG.debug("DEBUG TRACE");
 		model.addAttribute("person", new Persona());
-		// int i=6/0; //para desplegar un mensaje de error
+		//int i=6/0; //para desplegar un mensaje de error
 		return ViewConstant.FORM;
 	}
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Backend Ninja - Add/modify Contact</title>
+	<title>Control COVID CRUD Contactos</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<link rel="stylesheet"
@@ -17,17 +17,27 @@
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1>Contact Form</h1>
+			<h1>Registro de persona con COVID</h1>
 			<br/>
 			<form action="#" th:action="@{/contacts/addContact}" th:object="${contactModel}" method="post">
 			<input type="hidden" th:fiels=*{id}/>
-				First Name: <input type="text" class="form-control" th:field="*{firstName}" th:value="${firstName}"></input>
+				Cédula Identidad: <input type="text" class="form-control" th:field="*{ci}" th:value="${ci}"></input>
 				<br/>
-				Last Name: <input type="text" class="form-control" th:field="*{lastName}" th:value="${lastName}"></input>
+				Nombre: <input type="text" class="form-control" th:field="*{firstName}" th:value="${firstName}"></input>
 				<br/>
-				Telephone: <input type="text" class="form-control" th:field="*{telephone}" th:value="${telephone}"></input>
+				Apellido: <input type="text" class="form-control" th:field="*{lastName}" th:value="${lastName}"></input>
 				<br/>
-				City: <input type="text" class="form-control" th:field="*{city}" th:value="${city}"></input>
+				Edad: <input type="text" class="form-control" th:field="*{age}" th:value="${age}"></input>
+				<br/>
+				Tipo de sangre: <input type="text" class="form-control" th:field="*{bloodType}" th:value="${bloodType}"></input>
+				<br/>
+				Teléfono: <input type="text" class="form-control" th:field="*{telephone}" th:value="${telephone}"></input>
+				<br/>
+				Celular: <input type="text" class="form-control" th:field="*{cellphone}" th:value="${cellphone}"></input>
+				<br/>
+				Ciudad: <input type="text" class="form-control" th:field="*{city}" th:value="${city}"></input>
+				<br/>
+				Dirección: <input type="text" class="form-control" th:field="*{address}" th:value="${address}"></input>
 				<br/>
 				<br/>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">

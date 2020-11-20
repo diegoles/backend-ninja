@@ -1,5 +1,11 @@
 package com.udemy.model;
 
+import java.math.BigInteger;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,14 +18,20 @@ import lombok.NoArgsConstructor;
 public class ContactModel {
 
     private int id;
+    @NotNull
+    private BigInteger ci;
+    @Size(min = 2, max = 6)
     private String firstName;
+    @NotNull
+    @Size(min = 2, max = 6)
     private String lastName;
+    @Min(18)
+    private Integer age;
+    private String bloodType;
     private String telephone;
-    private String city;
+    private String cellphone;
 
-    @Override
-    public String toString() {
-        return "ContactModel [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", telephone=" + telephone + ", city=" + city + "]";
-    }
+    private String city;
+    private String address;
 
 }

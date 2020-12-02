@@ -1,53 +1,86 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Control COVID CRUD Contactos</title>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<link rel="stylesheet"
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+<title>Control COVID CRUD Contactos</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js"></script>
+	
+	<!-- Custom styles for this template -->
     <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
+    
+ 	<link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
+ 	
 </head>
 <body>
 
 	<div class="jumbotron">
 		<div class="container">
-			<h1>Registro de persona con COVID</h1>
-			<br/>
-			<form action="#" th:action="@{/contacts/addContact}" th:object="${contactModel}" method="post">
+
+			<h3 style="text-align: center">Registro de persona con COVID</h3>
+			<form action="#" th:action="@{/contacts/addContact}"
+				th:object="${contactModel}" method="post">
 				<input type="hidden" th:field=*{id}></input>
-				Cédula Identidad: <input type="text" class="form-control" th:field="*{ci}" th:value="${ci}"></input>
-				<br/>
-				Nombre: <input type="text" class="form-control" th:field="*{firstName}" th:value="${firstName}"></input>
-				<br/>
-				Apellido: <input type="text" class="form-control" th:field="*{lastName}" th:value="${lastName}"></input>
-				<br/>
-				Edad: <input type="text" class="form-control" th:field="*{age}" th:value="${age}"></input>
-				<br/>
-				Tipo de sangre: <input type="text" class="form-control" th:field="*{bloodType}" th:value="${bloodType}"></input>
-				<br/>
-				Teléfono: <input type="text" class="form-control" th:field="*{telephone}" th:value="${telephone}"></input>
-				<br/>
-				Celular: <input type="text" class="form-control" th:field="*{cellphone}" th:value="${cellphone}"></input>
-				<br/>
-				Ciudad: <input type="text" class="form-control" th:field="*{city}" th:value="${city}"></input>
-				<br/>
-				Dirección: <input type="text" class="form-control" th:field="*{address}" th:value="${address}"></input>
-				<br/>
-				<br/>
-				<button class="btn btn-lg btn-primary btn-block" type="submit">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Aceptar
-				</button>
+
+				<div class="form-group row">
+					<div class="col-md-2">
+						<label for="*{ci}">Cédula Identidad:</label> <input type="text"
+							class="form-control" placeholder="Cédula Identidad"
+							th:field="*{ci}" th:value="${ci}">
+					</div>
+					<div class="col-md-5">
+						<label for="${firstName}">Nombre:</label> <input type="text"
+							class="form-control" placeholder="Nombre" th:field="*{firstName}"
+							th:value="${firstName}">
+					</div>
+					<div class="col-md-5">
+						<label for="*{lastName}">Apellido:</label> <input type="text"
+							class="form-control" placeholder="Apellido"
+							th:field="*{lastName}" th:value="${lastName}">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-3">
+						<label for="${age}">Edad:</label> <input type="text"
+							class="form-control" placeholder="Edad" th:field="*{age}"
+							th:value="${age}">
+					</div>
+					<div class="col-md-3">
+						<label for="${bloodType}">Tipo de sangre:</label> <input
+							type="text" class="form-control" placeholder="Tipo de sangre"
+							th:field="*{bloodType}" th:value="${bloodType}">
+					</div>
+					<div class="col-md-3">
+						<label for="${telephone}">Teléfono:</label> <input type="text"
+							class="form-control" placeholder="Teléfono"
+							th:field="*{telephone}" th:value="${telephone}">
+					</div>
+					<div class="col-md-3">
+						<label for="${cellphone}">Celular:</label> <input type="text"
+							class="form-control" placeholder="Celular"
+							th:field="*{cellphone}" th:value="${cellphone}">
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<div class="col-md-12">
+						<label for="${address}">Dirección</label> <input type="text"
+							class="form-control" th:field="*{address}" th:value="${address}"
+							placeholder="1234 Calle Principal">
+					</div>
+				</div>
+
+				<button type="submit" class="btn btn-primary btn-lg btn-block">
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar</button>
 			</form>
-			
+
 			<a href="#" th:href="@{/contacts/cancel}">
-				<button class="btn btn-lg btn-primary btn-block" type="submit">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Cancelar
+				<button class="btn btn-danger btn-lg btn-block" type="submit">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+					Cancelar
 				</button>
 			</a>
 			

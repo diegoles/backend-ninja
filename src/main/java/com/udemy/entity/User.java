@@ -23,10 +23,10 @@ public class User {
     @Column(name = "user_name", unique = true, nullable = false, length = 45)
     private String userName;
 
-    @Column(name = "password", unique = true, nullable = false, length = 60)
+    @Column(name = "password", unique = false, nullable = false, length = 60)
     private String password;
 
-    @Column(name = "enabled", unique = true, nullable = false)
+    @Column(name = "enabled", unique = false, nullable = false)
     private Boolean enabled;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")

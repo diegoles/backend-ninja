@@ -31,7 +31,7 @@ public class ContactController {
 
 	@RequestMapping("/cancel")
 	public String Cancel() {
-		return "redirect:/contacts/showContacts";
+		return "redirect:/contacts/showContacts?result=0";
 	}
 
 	
@@ -48,25 +48,28 @@ public class ContactController {
 
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@RequestMapping("/addContact")
-	public String addContact(@ModelAttribute(name = "contactModel") ContactModel contactModel, Model model) {
+	public String addContact(@ModelAttribute(name = "contactModel") ContactModel contactModel) {
 		LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
-
+		int result = 0;
+		// Persona agregada correctamente
 		if (null != contactService.addContact(contactModel)) {
-			model.addAttribute("result", 1);
+			result = 1;
 		} else {
-			model.addAttribute("result", 0);
+		    // No se pudo agregar a la persona
+			result = 5;
 		}
 
-		return "redirect:/contacts/showContacts";
+		return "redirect:/contacts/showContacts?result=".concat(result+"");
 	}
 
 	@PreAuthorize("permitAll()")
 	@GetMapping("/showContacts")
-	public ModelAndView showContacts() {
+	public ModelAndView showContacts(@RequestParam(name = "result", required = false) int result) {
 		ModelAndView mav = new ModelAndView(ViewConstant.CONTACTS);
 		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		mav.addObject("userName", user.getUsername());
 		mav.addObject("contacts", contactService.listAllContacts());
+		mav.addObject("result", result);
 
 		return mav;
 	}
@@ -74,6 +77,6 @@ public class ContactController {
 	@GetMapping("/removeContact")
 	public ModelAndView removeContact(@RequestParam(name = "id", required = true) int id) {
 		contactService.removeContact(id);
-		return showContacts();
+		return showContacts(2);
 	}
 }

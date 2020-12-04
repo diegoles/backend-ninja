@@ -1,5 +1,7 @@
 package com.udemy.controller;
 
+import javax.validation.Valid;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,17 +51,21 @@ public class ContactController {
 
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@RequestMapping("/addContact")
-	public String addContact(@ModelAttribute(name = "contactModel") ContactModel contactModel) {
-		LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
-		int result = 0;
-		// Persona agregada correctamente
-		if (null != contactService.addContact(contactModel)) {
-			result = 1;
-		} else {
-		    // No se pudo agregar a la persona
-			result = 5;
-		}
-
+	public String addContact(@Valid @ModelAttribute(name = "contactModel") ContactModel contactModel, BindingResult bindingResult) {
+	    LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
+        int result = 0;
+        if (bindingResult.hasErrors()) {
+            return ViewConstant.CONTACT_FORM;
+        } else {
+         // Persona agregada correctamente
+            if (null != contactService.addContact(contactModel)) {
+                result = 1;
+            } else {
+                // No se pudo agregar a la persona
+                result = 5;
+            }
+        }
+		
 		return "redirect:/contacts/showContacts?result=".concat(result+"");
 	}
 

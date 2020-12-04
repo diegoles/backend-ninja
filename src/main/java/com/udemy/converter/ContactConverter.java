@@ -1,5 +1,7 @@
 package com.udemy.converter;
 
+import java.math.BigInteger;
+
 import org.springframework.stereotype.Component;
 
 import com.udemy.entity.Contact;
@@ -11,7 +13,7 @@ public class ContactConverter {
     public ContactModel convertContact2ContactModel(Contact contact) {
         return ContactModel.builder()
                 .id(contact.getId())
-                .ci(contact.getCi())
+                .ci(contact.getCi().toString())
                 .firstName(contact.getFirstName())
                 .lastName(contact.getLastName())
                 .age(contact.getAge())
@@ -26,7 +28,7 @@ public class ContactConverter {
     public Contact convertContactModel2Contact(ContactModel contactModel) {
         return Contact.builder()
                 .id(contactModel.getId())
-                .ci(contactModel.getCi())
+                .ci(new BigInteger(contactModel.getCi()))
                 .firstName(contactModel.getFirstName())
                 .lastName(contactModel.getLastName())
                 .age(contactModel.getAge())

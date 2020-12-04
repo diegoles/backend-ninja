@@ -1,9 +1,6 @@
 package com.udemy.model;
 
-import java.math.BigInteger;
-
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.AllArgsConstructor;
@@ -18,17 +15,21 @@ import lombok.NoArgsConstructor;
 public class ContactModel {
 
     private int id;
-    @NotNull
-    private BigInteger ci;
-    @Size(min = 2, max = 6)
+    
+    @Size(min = 10, max = 10)
+    private String ci;
+    
     private String firstName;
-    @NotNull
-    @Size(min = 2, max = 6)
+    
     private String lastName;
+    
     @Min(18)
     private Integer age;
+    
     private String bloodType;
+    @Size(min = 0, max = 9)
     private String telephone;
+    @Size(min = 0, max = 10)
     private String cellphone;
 
     private String city;

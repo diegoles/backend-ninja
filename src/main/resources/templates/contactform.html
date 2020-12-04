@@ -5,14 +5,20 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js"></script>
-	
-	<!-- Custom styles for this template -->
-    <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
-    
- 	<link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
- 	
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js"></script>
+
+<!-- Custom styles for this template -->
+<link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
+
+<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'
+	rel='stylesheet' />
+
 </head>
 <body>
 
@@ -29,16 +35,22 @@
 						<label for="*{ci}">Cédula Identidad:</label> <input type="text"
 							class="form-control" placeholder="Cédula Identidad"
 							th:field="*{ci}" th:value="${ci}">
+						<p th:if="${#fields.hasErrors('ci')}" th:errors="*{ci}">Cédula
+							con error</p>
 					</div>
 					<div class="col-md-5">
 						<label for="${firstName}">Nombre:</label> <input type="text"
 							class="form-control" placeholder="Nombre" th:field="*{firstName}"
 							th:value="${firstName}">
+						<p th:if="${#fields.hasErrors('firstName')}"
+							th:errors="*{firstName}">Nombre con error</p>
 					</div>
 					<div class="col-md-5">
 						<label for="*{lastName}">Apellido:</label> <input type="text"
 							class="form-control" placeholder="Apellido"
 							th:field="*{lastName}" th:value="${lastName}">
+						<p th:if="${#fields.hasErrors('lastName')}"
+							th:errors="*{lastName}">Apellido con error</p>
 					</div>
 				</div>
 
@@ -47,6 +59,8 @@
 						<label for="${age}">Edad:</label> <input type="text"
 							class="form-control" placeholder="Edad" th:field="*{age}"
 							th:value="${age}">
+						<p th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Edad
+							con error</p>
 					</div>
 					<div class="col-md-3">
 						<label for="${bloodType}">Tipo de sangre:</label> <input
@@ -57,24 +71,36 @@
 						<label for="${telephone}">Teléfono:</label> <input type="text"
 							class="form-control" placeholder="Teléfono"
 							th:field="*{telephone}" th:value="${telephone}">
+						<p th:if="${#fields.hasErrors('telephone')}"
+							th:errors="*{telephone}">Edad con error</p>
 					</div>
 					<div class="col-md-3">
 						<label for="${cellphone}">Celular:</label> <input type="text"
 							class="form-control" placeholder="Celular"
 							th:field="*{cellphone}" th:value="${cellphone}">
+						<p th:if="${#fields.hasErrors('cellphone')}"
+							th:errors="*{cellphone}">Edad con error</p>
 					</div>
 				</div>
 
 				<div class="form-group row">
-					<div class="col-md-12">
+					<div class="col-md-3">
+						<label for="${city}">Ciudad:</label> <input type="text"
+							class="form-control" th:field="*{city}" th:value="${city}"
+							placeholder="Quito">
+					</div>
+					<div class="col-md-9">
 						<label for="${address}">Dirección</label> <input type="text"
 							class="form-control" th:field="*{address}" th:value="${address}"
 							placeholder="1234 Calle Principal">
 					</div>
 				</div>
 
+				<div id='map' style='text-align: center; with: 600px; height: 400px;'></div>
+				<br />
 				<button type="submit" class="btn btn-primary btn-lg btn-block">
-				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar</button>
+					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar
+				</button>
 			</form>
 
 			<a href="#" th:href="@{/contacts/cancel}">
@@ -83,9 +109,28 @@
 					Cancelar
 				</button>
 			</a>
-			
+
 		</div>
 	</div>
 
+	<script th:inline="javascript">
+		/*<![CDATA[*/
+
+		mapboxgl.accessToken = 'pk.eyJ1IjoiZWRpYXp1Y2UiLCJhIjoiY2tpOXB1dmtkMDNmdDJycDZ0cWw5NHAwMyJ9.rZNUmdToJ7-nS5dFkM6FVQ';
+		var map = new mapboxgl.Map({
+			container : 'map',
+			style : 'mapbox://styles/mapbox/streets-v11',
+			center : [ -78.500799, -0.273908 ],
+			zoom : 18
+		});
+		var marker = new mapboxgl.Marker().setLngLat([ -78.500799, -0.273908 ])
+				.addTo(map);
+
+		var myval = /*[[${contactModel.id}]]*/"Test";
+
+		console.log(myval);
+
+		/*]]>*/
+	</script>
 </body>
 </html>

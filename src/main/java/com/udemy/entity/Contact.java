@@ -25,7 +25,7 @@ public class Contact {
 	@GeneratedValue
 	@Column(name = "id")
 	private int id;
-	@Column(name = "ci")
+	@Column(name = "ci", unique = true, nullable = false)
     private BigInteger ci;
 	@Column(name = "firstName")
 	private String firstName;

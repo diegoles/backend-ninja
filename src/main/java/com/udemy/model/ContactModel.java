@@ -1,6 +1,6 @@
 package com.udemy.model;
 
-import javax.persistence.Column;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
@@ -25,6 +25,7 @@ public class ContactModel {
     private String lastName;
     
     @Min(18)
+    @Max(150)
     private Integer age;
     
     private String bloodType;

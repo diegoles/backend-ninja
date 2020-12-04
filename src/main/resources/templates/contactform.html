@@ -16,20 +16,37 @@
 <link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
 
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'	rel='stylesheet' />
-	
-	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<link
-rel="stylesheet"
-href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-type="text/css"
-/>
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'
+	rel='stylesheet' />
+
+<script
+	src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link rel="stylesheet"
+	href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+	type="text/css" />
 <!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
 </head>
 <body>
+	<style>
+		.coordinates {
+			background: rgba(0, 0, 0, 0.5);
+			color: #fff;
+			position: absolute;
+			bottom: 40px;
+			left: 10px;
+			padding: 5px 10px;
+			margin: 0;
+			font-size: 11px;
+			line-height: 18px;
+			border-radius: 3px;
+			display: none;
+		}
+	</style>
 
 	<div class="jumbotron">
 		<div class="container">
@@ -37,7 +54,9 @@ type="text/css"
 			<h3 style="text-align: center">Registro de persona con COVID</h3>
 			<form action="#" th:action="@{/contacts/addContact}"
 				th:object="${contactModel}" method="post">
-				<input type="hidden" th:field=*{id}></input>
+				<input type="hidden" th:field=*{id}></input> <input type="hidden"
+					th:field="*{latitude}" th:value="${latitude}"> <input
+					type="hidden" th:field="*{longitude}" th:value="${longitude}">
 
 				<div class="form-group row">
 					<div class="col-md-2">
@@ -104,21 +123,10 @@ type="text/css"
 							placeholder="1234 Calle Principal">
 					</div>
 				</div>
-				<div class="form-group row">
-					<div class="col-md-3">
-						<label for="${latitude}">Latitud:</label> <input type="text"
-							class="form-control" placeholder="Latitud" th:field="*{latitude}"
-							th:value="${latitude}">
-					</div>
-					<div class="col-md-3">
-						<label for="${longitude}">Longitud:</label> <input type="text"
-							class="form-control" placeholder="Longitud"
-							th:field="*{longitude}" th:value="${longitude}">
-					</div>
-				</div>
 
 				<div id='map'
 					style='text-align: center; with: 600px; height: 400px;'></div>
+				<pre id="coordinates" class="coordinates"></pre>
 				<br />
 				<button type="submit" class="btn btn-primary btn-lg btn-block"
 					onclick="gfg_Run()">
@@ -138,7 +146,7 @@ type="text/css"
 
 	<script th:inline="javascript">
 		/*<![CDATA[*/
-
+		var coordinates = document.getElementById('coordinates');
 		let latitude = /*[[${contactModel.latitude}]]*/"Test";
 		let longitude = /*[[${contactModel.longitude}]]*/"Test";
 
@@ -159,9 +167,22 @@ type="text/css"
 			zoom : 13
 		});
 
-		var marker = new mapboxgl.Marker()
+		var marker = new mapboxgl.Marker({draggable: true})
 				.setLngLat([ longitude, latitude ])
 				.addTo(map);
+		
+		function onDragEnd() {
+			var lngLat = marker.getLngLat();
+			coordinates.style.display = 'block';
+			coordinates.innerHTML =
+			'Longitude: ' + lngLat.lng + '<br />Latitude: ' + lngLat.lat;
+			var inputLatitude = document.getElementById("latitude");
+			inputLatitude.setAttribute('value', lngLat.lat);
+			var inputLongitude = document.getElementById("longitude");
+			inputLongitude.setAttribute('value', lngLat.lng);
+			}
+			 
+		marker.on('dragend', onDragEnd);
 
 		function gfg_Run() {
 			var inputLatitude = document.getElementById("latitude");
@@ -183,12 +204,6 @@ type="text/css"
 	        }
 
 	        function coordinateFeature(lng, lat) {
-	        	var inputLatitude = document.getElementById("latitude");
-				inputLatitude.setAttribute('value', lng);
-				var inputLongitude = document.getElementById("longitude");
-				inputLongitude.setAttribute('value', lat);
-				console.log(lat);
-				console.log(lng);
 	            return {
 	                center: [lng, lat],
 	                geometry: {
@@ -230,7 +245,7 @@ type="text/css"
 	            accessToken: mapboxgl.accessToken,
 	            localGeocoder: coordinatesGeocoder,
 	            zoom: 13,
-	            placeholder: 'Try: -40, 170',
+	            placeholder: '-78.500, -0.273',
 	            mapboxgl: mapboxgl
 	        })
 	    );

@@ -22,6 +22,8 @@ public class ContactConverter {
                 .cellphone(contact.getCellphone())
                 .city(contact.getCity())
                 .address(contact.getAddress())
+                .latitude(contact.getLatitude())
+                .longitude(contact.getLongitude())
                 .build();
     }
 
@@ -37,6 +39,8 @@ public class ContactConverter {
                 .cellphone(contactModel.getCellphone())
                 .city(contactModel.getCity())
                 .address(contactModel.getAddress())
+                .latitude(contactModel.getLatitude())
+                .longitude(contactModel.getLongitude())
                 .build();
     }
 

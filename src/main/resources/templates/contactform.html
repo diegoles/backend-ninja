@@ -16,8 +16,17 @@
 <link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
 
 <script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'
-	rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'	rel='stylesheet' />
+	
+	<script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
+<link
+rel="stylesheet"
+href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
+type="text/css"
+/>
+<!-- Promise polyfill script required to use Mapbox GL Geocoder in IE 11 -->
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
 
 </head>
 <body>
@@ -95,10 +104,24 @@
 							placeholder="1234 Calle Principal">
 					</div>
 				</div>
+				<div class="form-group row">
+					<div class="col-md-3">
+						<label for="${latitude}">Latitud:</label> <input type="text"
+							class="form-control" placeholder="Latitud" th:field="*{latitude}"
+							th:value="${latitude}">
+					</div>
+					<div class="col-md-3">
+						<label for="${longitude}">Longitud:</label> <input type="text"
+							class="form-control" placeholder="Longitud"
+							th:field="*{longitude}" th:value="${longitude}">
+					</div>
+				</div>
 
-				<div id='map' style='text-align: center; with: 600px; height: 400px;'></div>
+				<div id='map'
+					style='text-align: center; with: 600px; height: 400px;'></div>
 				<br />
-				<button type="submit" class="btn btn-primary btn-lg btn-block">
+				<button type="submit" class="btn btn-primary btn-lg btn-block"
+					onclick="gfg_Run()">
 					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar
 				</button>
 			</form>
@@ -116,19 +139,101 @@
 	<script th:inline="javascript">
 		/*<![CDATA[*/
 
+		let latitude = /*[[${contactModel.latitude}]]*/"Test";
+		let longitude = /*[[${contactModel.longitude}]]*/"Test";
+
+		if (latitude == null || longitude == null) {
+			latitude = '-0.17629413961721996';
+			longitude = '-78.47105937349755';
+			var inputLatitude = document.getElementById("latitude");
+			inputLatitude.setAttribute('value', latitude);
+			var inputLongitude = document.getElementById("longitude");
+			inputLongitude.setAttribute('value', longitude);
+		}
+		
 		mapboxgl.accessToken = 'pk.eyJ1IjoiZWRpYXp1Y2UiLCJhIjoiY2tpOXB1dmtkMDNmdDJycDZ0cWw5NHAwMyJ9.rZNUmdToJ7-nS5dFkM6FVQ';
 		var map = new mapboxgl.Map({
 			container : 'map',
 			style : 'mapbox://styles/mapbox/streets-v11',
-			center : [ -78.500799, -0.273908 ],
-			zoom : 18
+			center : [ longitude, latitude ],
+			zoom : 13
 		});
-		var marker = new mapboxgl.Marker().setLngLat([ -78.500799, -0.273908 ])
+
+		var marker = new mapboxgl.Marker()
+				.setLngLat([ longitude, latitude ])
 				.addTo(map);
 
-		var myval = /*[[${contactModel.id}]]*/"Test";
+		function gfg_Run() {
+			var inputLatitude = document.getElementById("latitude");
+			var inputLongitude = document.getElementById("longitude");
+			if (inputLatitude.value == null || inputLongitude.value == null) {
+				inputLatitude.setAttribute('value', '-0.17629413961721996');
+				inputLongitude.setAttribute('value', '-78.47105937349755');
+			}
+		}
+		
+		
+	    var coordinatesGeocoder = function (query) {
+	        // match anything which looks like a decimal degrees coordinate pair
+	        var matches = query.match(
+	            /^[ ]*(?:Lat: )?(-?\d+\.?\d*)[, ]+(?:Lng: )?(-?\d+\.?\d*)[ ]*$/i
+	        );
+	        if (!matches) {
+	            return null;
+	        }
 
-		console.log(myval);
+	        function coordinateFeature(lng, lat) {
+	        	var inputLatitude = document.getElementById("latitude");
+				inputLatitude.setAttribute('value', lng);
+				var inputLongitude = document.getElementById("longitude");
+				inputLongitude.setAttribute('value', lat);
+				console.log(lat);
+				console.log(lng);
+	            return {
+	                center: [lng, lat],
+	                geometry: {
+	                    type: 'Point',
+	                    coordinates: [lng, lat]
+	                },
+	                place_name: 'Lat: ' + lat + ' Lng: ' + lng,
+	                place_type: ['coordinate'],
+	                properties: {},
+	                type: 'Feature'
+	            };
+	        }
+
+	        var coord1 = Number(matches[1]);
+	        var coord2 = Number(matches[2]);
+	        var geocodes = [];
+
+	        if (coord1 < -90 || coord1 > 90) {
+	            // must be lng, lat
+	            geocodes.push(coordinateFeature(coord1, coord2));
+	        }
+
+	        if (coord2 < -90 || coord2 > 90) {
+	            // must be lat, lng
+	            geocodes.push(coordinateFeature(coord2, coord1));
+	        }
+
+	        if (geocodes.length === 0) {
+	            // else could be either lng, lat or lat, lng
+	            geocodes.push(coordinateFeature(coord1, coord2));
+	            geocodes.push(coordinateFeature(coord2, coord1));
+	        }
+
+	        return geocodes;
+	    };
+
+	    map.addControl(
+	        new MapboxGeocoder({
+	            accessToken: mapboxgl.accessToken,
+	            localGeocoder: coordinatesGeocoder,
+	            zoom: 13,
+	            placeholder: 'Try: -40, 170',
+	            mapboxgl: mapboxgl
+	        })
+	    );
 
 		/*]]>*/
 	</script>

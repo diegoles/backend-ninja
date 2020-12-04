@@ -46,4 +46,9 @@ public class Contact {
 	private String city;
 	@Column(name = "address")
     private String address;
+	
+	@Column(name = "latitude")
+	private Double latitude;
+	@Column(name = "longitude")
+	private Double longitude;
 }

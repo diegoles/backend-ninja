@@ -37,21 +37,9 @@ public class ContactController {
 		return "redirect:/contacts/showContacts?result=0";
 	}
 
-	
-	@RequestMapping("/contactForm")
-	public String redirectContactForm(@RequestParam(name = "id", required = false) int id, Model model) {
-		ContactModel contactModel = new ContactModel();
-		if (id != 0) {
-			contactModel = contactService.findContactByIdModel(id);
-		}
-		model.addAttribute("contactModel", contactModel);
-		LOG.info("METHOD: redirectContactForm() -- PARAMS: " + contactModel.toString());
-		return ViewConstant.CONTACT_FORM;
-	}
-
 	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
 	@RequestMapping("/addContact")
-	public String addContact(@Valid @ModelAttribute(name = "contactModel") ContactModel contactModel, BindingResult bindingResult) {
+	public String addContactTable(@Valid @ModelAttribute(name = "contactModel") ContactModel contactModel, BindingResult bindingResult) {
 	    LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
         int result = 0;
         if (bindingResult.hasErrors()) {
@@ -66,9 +54,32 @@ public class ContactController {
             }
         }
 		
-		return "redirect:/contacts/showContacts?result=".concat(result+"");
+		return "redirect:/contacts/table?result=".concat(result+"");
+	}
+	
+	@PreAuthorize("permitAll()")
+	@GetMapping("/table")
+	public ModelAndView table(@RequestParam(name = "result", required = false) int result) {
+		ModelAndView mav = new ModelAndView(ViewConstant.TABLE);
+		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		mav.addObject("userName", user.getUsername());
+		mav.addObject("contacts", contactService.listAllContacts());
+		mav.addObject("result", result);
+
+		return mav;
+	}
+	@RequestMapping("/contactForm")
+	public String redirectContactForm(@RequestParam(name = "id", required = false) int id, Model model) {
+		ContactModel contactModel = new ContactModel();
+		if (id != 0) {
+			contactModel = contactService.findContactByIdModel(id);
+		}
+		model.addAttribute("contactModel", contactModel);
+		LOG.info("METHOD: redirectContactForm() -- PARAMS: " + contactModel.toString());
+		return ViewConstant.CONTACT_FORM;
 	}
 
+	
 	@PreAuthorize("permitAll()")
 	@GetMapping("/showContacts")
 	public ModelAndView showContacts(@RequestParam(name = "result", required = false) int result) {

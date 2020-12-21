@@ -32,20 +32,20 @@
 <body>
 
 	<style>
-		#marker {
-			background-image:
-				url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
-			background-size: cover;
-			width: 50px;
-			height: 50px;
-			border-radius: 50%;
-			cursor: pointer;
-		}
-		
-		.mapboxgl-popup {
-			max-width: 200px;
-		}
-	</style>
+#marker {
+	background-image:
+		url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
+	background-size: cover;
+	width: 50px;
+	height: 50px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+
+.mapboxgl-popup {
+	max-width: 200px;
+}
+</style>
 
 	<div class="container">
 
@@ -58,6 +58,12 @@
 		<div class="panel panel-default">
 			<div class="panel-heading" style="text-align: center">
 				<h3>Registro de personas con COVID</h3>
+				<a href="#" th:href="@{/contacts/showContacts?result=0}">
+					<button class="btn btn-lg btn-primary btn-block" type="submit">
+						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+						Mapa Registro
+					</button>
+				</a>
 			</div>
 			<table class="table">
 				<thead>
@@ -76,7 +82,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="contact:${table}">
+					<tr th:each="contact:${contacts}">
 						<td th:text="${contact.ci}"></td>
 						<td th:text="${contact.firstName}"></td>
 						<td th:text="${contact.lastName}"></td>
@@ -102,7 +108,6 @@
 			</table>
 		</div>
 
-		<div id='map' style='text-align: center; with: 600px; height: 400px;'></div>
 
 		<div th:if="${result == 1}" class="alert alert-success" role=alert>Registro
 			exito de la persona!!</div>

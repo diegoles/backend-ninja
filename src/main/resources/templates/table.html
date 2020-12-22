@@ -8,44 +8,16 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 
 <!-- Custom styles for this template -->
 <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
 <link href="#" th:href="@{/css/contacts.css}" rel="stylesheet" />
 
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css'
-	rel='stylesheet' />
-<script
-	src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.min.js"></script>
-<link rel="stylesheet"
-	href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.5.1/mapbox-gl-geocoder.css"
-	type="text/css" />
-<script
-	src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.min.js"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/es6-promise@4/dist/es6-promise.auto.min.js"></script>
-
-
 </head>
 
 <body>
-
-	<style>
-#marker {
-	background-image:
-		url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
-	background-size: cover;
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	cursor: pointer;
-}
-
-.mapboxgl-popup {
-	max-width: 200px;
-}
-</style>
 
 	<div class="container">
 
@@ -70,7 +42,7 @@
 				<thead>
 					<tr>
 						<th>Cédula Identidad</th>
-						<th>Nombreeee</th>
+						<th>Nombre</th>
 						<th>Apellido</th>
 						<th>Edad</th>
 						<th>Tipo de Sangre</th>
@@ -125,28 +97,5 @@
 		</form>
 	</div>
 
-	<script th:inline="javascript">
-		/*<![CDATA[*/
-		var contacts = /*[[${contacts}]]*/"Contacts";
-		console.log(contacts);
-		
-		mapboxgl.accessToken = 'pk.eyJ1IjoiZWRpYXp1Y2UiLCJhIjoiY2tpOXB1dmtkMDNmdDJycDZ0cWw5NHAwMyJ9.rZNUmdToJ7-nS5dFkM6FVQ';
-		
-		var map = new mapboxgl.Map({
-			container : 'map',
-			style : 'mapbox://styles/mapbox/streets-v11',
-			center : [-78.47105937349755, -0.17629413961721996],
-			zoom : 5
-		});
-		
-		contacts.forEach(contact => {
-			new mapboxgl.Marker()
-			.setLngLat([ contact.longitude, contact.latitude ])
-			.setPopup(new mapboxgl.Popup({ offset: 25 }).setText(contact.firstName))
-			.addTo(map);
-		});
-		
-		/*]]>*/
-	</script>
 </body>
 </html>

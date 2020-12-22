@@ -8,6 +8,8 @@
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 
 <!-- Custom styles for this template -->
 <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
@@ -32,20 +34,20 @@
 <body>
 
 	<style>
-#marker {
-	background-image:
-		url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
-	background-size: cover;
-	width: 50px;
-	height: 50px;
-	border-radius: 50%;
-	cursor: pointer;
-}
-
-.mapboxgl-popup {
-	max-width: 200px;
-}
-</style>
+		#marker {
+			background-image:
+				url('https://docs.mapbox.com/mapbox-gl-js/assets/washington-monument.jpg');
+			background-size: cover;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			cursor: pointer;
+		}
+		
+		.mapboxgl-popup {
+			max-width: 200px;
+		}
+	</style>
 
 	<div class="container">
 
@@ -68,7 +70,7 @@
 			</ul>
 		</div>
 
-		<div id='map' style='text-align: center; with: 600px; height: 400px;'></div>
+		<div id='map' style='text-align: center; with: 600px; height: 450px;'></div>
 
 		<div th:if="${result == 1}" class="alert alert-success" role=alert>Registro
 			exito de la persona!!</div>
@@ -76,13 +78,13 @@
 			al registrar nueva persona!!</div>
 		<div th:if="${result == 2}" class="alert alert-info" role=alert>Persona
 			eliminada!!</div>
-			<br>
-			<form th:action="@{/logout}" method="POST">
-				<button class="btn btn-lg btn-danger btn-block" type="submit">
-					<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
-					Salir
-				</button>
-			</form>
+		<br>
+		<form th:action="@{/logout}" method="POST">
+			<button class="btn btn-lg btn-danger btn-block" type="submit">
+				<span class="glyphicon glyphicon-log-out" aria-hidden="true"></span>
+				Salir
+			</button>
+		</form>
 	</div>
 
 	<script th:inline="javascript">
@@ -95,8 +97,8 @@
 		var map = new mapboxgl.Map({
 			container : 'map',
 			style : 'mapbox://styles/mapbox/streets-v11',
-			center : [-78.47105937349755, -0.17629413961721996],
-			zoom : 5
+			center : [-78.73105937349755, -1.43729413961721996],
+			zoom : 6
 		});
 		
 		contacts.forEach(contact => {

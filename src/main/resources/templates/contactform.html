@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.0/js/bootstrap.min.js"></script>
+<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.3/js/bootstrap.min.js"></script>
 
 <!-- Custom styles for this template -->
 <link href="#" th:href="@{/css/style.css}" rel="stylesheet" />
@@ -38,100 +38,98 @@
 		}
 	</style>
 
-	<div class="jumbotron">
-		<div class="container">
+	<div class="container">
 
-			<h3 style="text-align: center">Registro de persona con COVID</h3>
-			<form action="#" th:action="@{/contacts/addContact}"
-				th:object="${contactModel}" method="post">
-				<input type="hidden" th:field=*{id}></input> <input type="hidden"
-					th:field="*{latitude}" th:value="${latitude}"> <input
-					type="hidden" th:field="*{longitude}" th:value="${longitude}">
+		<h3 style="text-align: center">Registro de persona con COVID</h3>
+		<form action="#" th:action="@{/contacts/addContact}"
+			th:object="${contactModel}" method="post">
+			<input type="hidden" th:field=*{id}></input> <input type="hidden"
+				th:field="*{latitude}" th:value="${latitude}"> <input
+				type="hidden" th:field="*{longitude}" th:value="${longitude}">
 
-				<div class="form-group row">
-					<div class="col-md-2">
-						<label for="*{ci}">Cédula Identidad:</label> <input type="text"
-							class="form-control" placeholder="Cédula Identidad"
-							th:field="*{ci}" th:value="${ci}">
-						<p th:if="${#fields.hasErrors('ci')}" th:errors="*{ci}">Cédula
-							con error</p>
-					</div>
-					<div class="col-md-5">
-						<label for="${firstName}">Nombre:</label> <input type="text"
-							class="form-control" placeholder="Nombre" th:field="*{firstName}"
-							th:value="${firstName}">
-						<p th:if="${#fields.hasErrors('firstName')}"
-							th:errors="*{firstName}">Nombre con error</p>
-					</div>
-					<div class="col-md-5">
-						<label for="*{lastName}">Apellido:</label> <input type="text"
-							class="form-control" placeholder="Apellido"
-							th:field="*{lastName}" th:value="${lastName}">
-						<p th:if="${#fields.hasErrors('lastName')}"
-							th:errors="*{lastName}">Apellido con error</p>
-					</div>
+			<div class="form-group row">
+				<div class="col-md-2">
+					<label for="*{ci}">Cédula Identidad:</label> <input type="text"
+						class="form-control" placeholder="Cédula Identidad"
+						th:field="*{ci}" th:value="${ci}">
+					<p th:if="${#fields.hasErrors('ci')}" th:errors="*{ci}">Cédula
+						con error</p>
 				</div>
-
-				<div class="form-group row">
-					<div class="col-md-3">
-						<label for="${age}">Edad:</label> <input type="text"
-							class="form-control" placeholder="Edad" th:field="*{age}"
-							th:value="${age}">
-						<p th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Edad
-							con error</p>
-					</div>
-					<div class="col-md-3">
-						<label for="${bloodType}">Tipo de sangre:</label> <input
-							type="text" class="form-control" placeholder="Tipo de sangre"
-							th:field="*{bloodType}" th:value="${bloodType}">
-					</div>
-					<div class="col-md-3">
-						<label for="${telephone}">Teléfono:</label> <input type="text"
-							class="form-control" placeholder="Teléfono"
-							th:field="*{telephone}" th:value="${telephone}">
-						<p th:if="${#fields.hasErrors('telephone')}"
-							th:errors="*{telephone}">Edad con error</p>
-					</div>
-					<div class="col-md-3">
-						<label for="${cellphone}">Celular:</label> <input type="text"
-							class="form-control" placeholder="Celular"
-							th:field="*{cellphone}" th:value="${cellphone}">
-						<p th:if="${#fields.hasErrors('cellphone')}"
-							th:errors="*{cellphone}">Edad con error</p>
-					</div>
+				<div class="col-md-5">
+					<label for="${firstName}">Nombre:</label> <input type="text"
+						class="form-control" placeholder="Nombre" th:field="*{firstName}"
+						th:value="${firstName}">
+					<p th:if="${#fields.hasErrors('firstName')}"
+						th:errors="*{firstName}">Nombre con error</p>
 				</div>
-
-				<div class="form-group row">
-					<div class="col-md-3">
-						<label for="${city}">Ciudad:</label> <input type="text"
-							class="form-control" th:field="*{city}" th:value="${city}"
-							placeholder="Quito">
-					</div>
-					<div class="col-md-9">
-						<label for="${address}">Dirección</label> <input type="text"
-							class="form-control" th:field="*{address}" th:value="${address}"
-							placeholder="1234 Calle Principal">
-					</div>
+				<div class="col-md-5">
+					<label for="*{lastName}">Apellido:</label> <input type="text"
+						class="form-control" placeholder="Apellido"
+						th:field="*{lastName}" th:value="${lastName}">
+					<p th:if="${#fields.hasErrors('lastName')}"
+						th:errors="*{lastName}">Apellido con error</p>
 				</div>
+			</div>
 
-				<div id='map'
-					style='text-align: center; with: 600px; height: 400px;'></div>
-				<pre id="coordinates" class="coordinates"></pre>
-				<br />
-				<button type="submit" class="btn btn-primary btn-lg btn-block"
-					onclick="gfg_Run()">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar
-				</button>
-			</form>
+			<div class="form-group row">
+				<div class="col-md-3">
+					<label for="${age}">Edad:</label> <input type="text"
+						class="form-control" placeholder="Edad" th:field="*{age}"
+						th:value="${age}">
+					<p th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Edad
+						con error</p>
+				</div>
+				<div class="col-md-3">
+					<label for="${bloodType}">Tipo de sangre:</label> <input
+						type="text" class="form-control" placeholder="Tipo de sangre"
+						th:field="*{bloodType}" th:value="${bloodType}">
+				</div>
+				<div class="col-md-3">
+					<label for="${telephone}">Teléfono:</label> <input type="text"
+						class="form-control" placeholder="Teléfono"
+						th:field="*{telephone}" th:value="${telephone}">
+					<p th:if="${#fields.hasErrors('telephone')}"
+						th:errors="*{telephone}">Edad con error</p>
+				</div>
+				<div class="col-md-3">
+					<label for="${cellphone}">Celular:</label> <input type="text"
+						class="form-control" placeholder="Celular"
+						th:field="*{cellphone}" th:value="${cellphone}">
+					<p th:if="${#fields.hasErrors('cellphone')}"
+						th:errors="*{cellphone}">Edad con error</p>
+				</div>
+			</div>
 
-			<a href="#" th:href="@{/contacts/cancel}">
-				<button class="btn btn-danger btn-lg btn-block" type="submit">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					Cancelar
-				</button>
-			</a>
+			<div class="form-group row">
+				<div class="col-md-3">
+					<label for="${city}">Ciudad:</label> <input type="text"
+						class="form-control" th:field="*{city}" th:value="${city}"
+						placeholder="Quito">
+				</div>
+				<div class="col-md-9">
+					<label for="${address}">Dirección</label> <input type="text"
+						class="form-control" th:field="*{address}" th:value="${address}"
+						placeholder="1234 Calle Principal">
+				</div>
+			</div>
 
-		</div>
+			<div id='map'
+				style='text-align: center; with: 600px; height: 400px;'></div>
+			<pre id="coordinates" class="coordinates"></pre>
+			<br />
+			<button type="submit" class="btn btn-primary btn-lg btn-block"
+				onclick="gfg_Run()">
+				<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>Aceptar
+			</button>
+		</form>
+
+		<a href="#" th:href="@{/contacts/cancel}">
+			<button class="btn btn-danger btn-lg btn-block" type="submit">
+				<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				Cancelar
+			</button>
+		</a>
+
 	</div>
 
 	<script th:inline="javascript">

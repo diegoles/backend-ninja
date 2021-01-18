@@ -33,6 +33,8 @@ public class ContactModel {
     private String telephone;
     @Size(min = 0, max = 10)
     private String cellphone;
+    @Min(0)
+    private Integer confinementDays;
 
     private String city;
     private String address;

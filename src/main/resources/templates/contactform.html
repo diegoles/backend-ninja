@@ -50,7 +50,7 @@
 			<div class="form-group row">
 				<div class="col-md-2">
 					<label for="*{ci}">Cédula Identidad:</label> <input type="text"
-						class="form-control" placeholder="Cédula Identidad"
+						class="form-control" placeholder="Cédula Identidad" maxlength="10"
 						th:field="*{ci}" th:value="${ci}">
 					<p th:if="${#fields.hasErrors('ci')}" th:errors="*{ci}">Cédula
 						con error</p>
@@ -86,14 +86,14 @@
 				</div>
 				<div class="col-md-3">
 					<label for="${telephone}">Teléfono:</label> <input type="text"
-						class="form-control" placeholder="Teléfono"
+						class="form-control" placeholder="Teléfono" maxlength="9"
 						th:field="*{telephone}" th:value="${telephone}">
 					<p th:if="${#fields.hasErrors('telephone')}"
 						th:errors="*{telephone}">Edad con error</p>
 				</div>
 				<div class="col-md-3">
 					<label for="${cellphone}">Celular:</label> <input type="text"
-						class="form-control" placeholder="Celular"
+						class="form-control" placeholder="Celular" maxlength="10"
 						th:field="*{cellphone}" th:value="${cellphone}">
 					<p th:if="${#fields.hasErrors('cellphone')}"
 						th:errors="*{cellphone}">Edad con error</p>
@@ -106,10 +106,16 @@
 						class="form-control" th:field="*{city}" th:value="${city}"
 						placeholder="Quito">
 				</div>
-				<div class="col-md-9">
+				<div class="col-md-6">
 					<label for="${address}">Dirección</label> <input type="text"
 						class="form-control" th:field="*{address}" th:value="${address}"
 						placeholder="1234 Calle Principal">
+				</div>
+				<div class="col-md-3">
+					<label for="${confinementDays}">Dias confinamiento:</label> <input type="text"
+						class="form-control" placeholder="Dias confinamiento" th:field="*{confinementDays}"
+						th:value="${confinementDays}">
+					<p th:if="${#fields.hasErrors('confinementDays')}" th:errors="*{age}">Dias confinamiento con error</p>
 				</div>
 			</div>
 

@@ -70,7 +70,7 @@
 			</ul>
 		</div>
 
-		<div id='map' style='text-align: center; with: 600px; height: 450px;'></div>
+		<div id='map' style='text-align: center; with: 600px; height: 550px;'></div>
 
 		<div th:if="${result == 1}" class="alert alert-success" role=alert>Registro
 			exito de la persona!!</div>
@@ -104,7 +104,7 @@
 		contacts.forEach(contact => {
 			new mapboxgl.Marker()
 			.setLngLat([ contact.longitude, contact.latitude ])
-			.setPopup(new mapboxgl.Popup({ offset: 25 }).setText(contact.firstName))
+			.setPopup(new mapboxgl.Popup({ offset: 25 }).setText(contact.firstName)
 			.addTo(map);
 		});
 		

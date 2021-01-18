@@ -104,7 +104,9 @@
 		contacts.forEach(contact => {
 			new mapboxgl.Marker()
 			.setLngLat([ contact.longitude, contact.latitude ])
-			.setPopup(new mapboxgl.Popup({ offset: 25 }).setText(contact.firstName)
+			.setPopup(new mapboxgl.Popup({ offset: 25 })
+			.setText(contact.firstName
+					.concat(" ", contact.lastName, " - ", contact.confinementDays, " dias confinamiento.")))
 			.addTo(map);
 		});
 		

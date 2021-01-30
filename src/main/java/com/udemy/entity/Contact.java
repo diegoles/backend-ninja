@@ -39,6 +39,8 @@ public class Contact {
 	private String telephone;
 	@Column(name = "cellphone")
     private String cellphone;
+	@Column(name = "confinementDays")
+    private Integer confinementDays;
 	
 
 	// Estos atributos van en la otra tabla

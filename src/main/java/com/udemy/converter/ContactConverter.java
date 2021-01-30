@@ -24,6 +24,7 @@ public class ContactConverter {
                 .address(contact.getAddress())
                 .latitude(contact.getLatitude())
                 .longitude(contact.getLongitude())
+                .confinementDays(contact.getConfinementDays())
                 .build();
     }
 
@@ -41,6 +42,7 @@ public class ContactConverter {
                 .address(contactModel.getAddress())
                 .latitude(contactModel.getLatitude())
                 .longitude(contactModel.getLongitude())
+                .confinementDays(contactModel.getConfinementDays())
                 .build();
     }
 

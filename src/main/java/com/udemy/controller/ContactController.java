@@ -26,38 +26,26 @@ import com.udemy.service.ContactService;
 @RequestMapping("/contacts")
 public class ContactController {
 
-	private final static Log LOG = LogFactory.getLog(ContactController.class);
+    private final static Log LOG = LogFactory.getLog(ContactController.class);
 
-	@Autowired
-	@Qualifier("contactServiceImpl")
-	private ContactService contactService;
+    @Autowired
+    @Qualifier("contactServiceImpl")
+    private ContactService contactService;
 
-	@RequestMapping("/cancel")
-	public String Cancel() {
-		return "redirect:/contacts/showContacts?result=0";
-	}
+    @RequestMapping("/cancel")
+    public String Cancel() {
+        return "redirect:/contacts/showContacts?result=0";
+    }
 
-	
-	@RequestMapping("/contactForm")
-	public String redirectContactForm(@RequestParam(name = "id", required = false) int id, Model model) {
-		ContactModel contactModel = new ContactModel();
-		if (id != 0) {
-			contactModel = contactService.findContactByIdModel(id);
-		}
-		model.addAttribute("contactModel", contactModel);
-		LOG.info("METHOD: redirectContactForm() -- PARAMS: " + contactModel.toString());
-		return ViewConstant.CONTACT_FORM;
-	}
-
-	@PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
-	@RequestMapping("/addContact")
-	public String addContact(@Valid @ModelAttribute(name = "contactModel") ContactModel contactModel, BindingResult bindingResult) {
-	    LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
+    @RequestMapping("/addContact")
+    public String addContactTable(@Valid @ModelAttribute(name = "contactModel") ContactModel contactModel, BindingResult bindingResult) {
+        LOG.info("METHOD: addContact() -- PARAMS: " + contactModel.toString());
         int result = 0;
         if (bindingResult.hasErrors()) {
             return ViewConstant.CONTACT_FORM;
         } else {
-         // Persona agregada correctamente
+            // Persona agregada correctamente
             if (null != contactService.addContact(contactModel)) {
                 result = 1;
             } else {
@@ -65,25 +53,46 @@ public class ContactController {
                 result = 5;
             }
         }
-		
-		return "redirect:/contacts/showContacts?result=".concat(result+"");
-	}
 
-	@PreAuthorize("permitAll()")
-	@GetMapping("/showContacts")
-	public ModelAndView showContacts(@RequestParam(name = "result", required = false) int result) {
-		ModelAndView mav = new ModelAndView(ViewConstant.CONTACTS);
-		User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		mav.addObject("userName", user.getUsername());
-		mav.addObject("contacts", contactService.listAllContacts());
-		mav.addObject("result", result);
+        return "redirect:/contacts/table?result=".concat(result + "");
+    }
 
-		return mav;
-	}
+    @RequestMapping("/contactForm")
+    public String redirectContactForm(@RequestParam(name = "id", required = false) int id, Model model) {
+        ContactModel contactModel = new ContactModel();
+        if (id != 0) {
+            contactModel = contactService.findContactByIdModel(id);
+        }
+        model.addAttribute("contactModel", contactModel);
+        LOG.info("METHOD: redirectContactForm() -- PARAMS: " + contactModel.toString());
+        return ViewConstant.CONTACT_FORM;
+    }
 
-	@GetMapping("/removeContact")
-	public ModelAndView removeContact(@RequestParam(name = "id", required = true) int id) {
-		contactService.removeContact(id);
-		return showContacts(2);
-	}
+    @PreAuthorize("permitAll()")
+    @GetMapping("/showContacts")
+    public ModelAndView showContacts(@RequestParam(name = "result", required = false) int result) {
+        return getMavContacts(result, ViewConstant.CONTACTS);
+    }
+    
+    @PreAuthorize("permitAll()")
+    @GetMapping("/table")
+    public ModelAndView table(@RequestParam(name = "result", required = false) int result) {
+        return getMavContacts(result, ViewConstant.TABLE);
+    }
+
+    @GetMapping("/removeContact")
+    public ModelAndView removeContact(@RequestParam(name = "id", required = true) int id) {
+        contactService.removeContact(id);
+        return table(2);
+    }
+    
+    private ModelAndView getMavContacts(int result, String viewConstant) {
+        ModelAndView mav = new ModelAndView(viewConstant);
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        mav.addObject("userName", user.getUsername());
+        mav.addObject("contacts", contactService.listAllContacts());
+        mav.addObject("result", result);
+
+        return mav;
+    }
 }

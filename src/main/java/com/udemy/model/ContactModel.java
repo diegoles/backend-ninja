@@ -24,7 +24,7 @@ public class ContactModel {
     
     private String lastName;
     
-    @Min(18)
+    @Min(0)
     @Max(150)
     private Integer age;
     
